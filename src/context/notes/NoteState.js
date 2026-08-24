@@ -4,7 +4,7 @@ import noteContext from "./noteContext";
 const NoteState = (props) => {
   const notesInitial = [
     {
-      _id: "6a8b14dba00debec6095f2bb8",
+      _id: "6a8b14dba00debec095f2bb8",
       user: "6a848740ac1b635ef190f207",
       title: "New note",
       description: "Please access the playlist",
@@ -93,17 +93,24 @@ const NoteState = (props) => {
     setNotes(notes.concat(note));
   };
   // Delete a Note
-  const deleteNote = () => {
-
-  }
+  const deleteNote = (id) => {
+    // TODO API Call
+    console.log("Deleting the note with id" + id);
+    const newNotes = notes.filter((note) => {
+      return note._id !== id;
+    });
+    setNotes(newNotes);
+  };
 
   // Edit a Note
-  const editNote = () => {
-
-  }
+  const editNote = (id, title, description, tag) => {
+    
+  };
 
   return (
-    <noteContext.Provider value={{ notes, setNotes, addNote, deleteNote, editNote  }}>
+    <noteContext.Provider
+      value={{ notes, setNotes, addNote, deleteNote, editNote }}
+    >
       {props.children}
     </noteContext.Provider>
   );
