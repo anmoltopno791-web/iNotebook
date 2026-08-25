@@ -2,85 +2,45 @@ import React, { useState } from "react";
 import noteContext from "./noteContext";
 
 const NoteState = (props) => {
-  const notesInitial = [
-    {
-      _id: "6a8b14dba00debec095f2bb8",
-      user: "6a848740ac1b635ef190f207",
-      title: "New note",
-      description: "Please access the playlist",
-      tag: "YouTube",
-      date: "2026-08-23T15:42:19.359Z",
-      __v: 0,
-    },
-    {
-      _id: "6a8b150ea00debeic095f2bb9",
-      user: "6a848740ac1b635ef190f207",
-      title: "Github",
-      description: "Please starting coding",
-      tag: "Coding",
-      date: "2026-08-23T15:43:10.465Z",
-      __v: 0,
-    },
-    {
-      _id: "6a8b14dba00deb5ec095f2bb8",
-      user: "6a848740ac1b635ef190f207",
-      title: "New note",
-      description: "Please access the playlist",
-      tag: "YouTube",
-      date: "2026-08-23T15:42:19.359Z",
-      __v: 0,
-    },
-    {
-      _id: "6a8b150ea00deb8ec095f2bb9",
-      user: "6a848740ac1b635ef190f207",
-      title: "Github",
-      description: "Please starting coding",
-      tag: "Coding",
-      date: "2026-08-23T15:43:10.465Z",
-      __v: 0,
-    },
-    {
-      _id: "6a8b14dba00deb6ec095f2bb8",
-      user: "6a848740ac1b635ef190f207",
-      title: "New note",
-      description: "Please access the playlist",
-      tag: "YouTube",
-      date: "2026-08-23T15:42:19.359Z",
-      __v: 0,
-    },
-    {
-      _id: "6a8b150ea00deb2ec095f2bb9",
-      user: "6a848740ac1b635ef190f207",
-      title: "Github",
-      description: "Please starting coding",
-      tag: "Coding",
-      date: "2026-08-23T15:43:10.465Z",
-      __v: 0,
-    },
-    {
-      _id: "6a8b14dba00debec0495f2bb8",
-      user: "6a848740ac1b635ef190f207",
-      title: "New note",
-      description: "Please access the playlist",
-      tag: "YouTube",
-      date: "2026-08-23T15:42:19.359Z",
-      __v: 0,
-    },
-    {
-      _id: "6a8b150ea00debec095fw2bb9",
-      user: "6a848740ac1b635ef190f207",
-      title: "Github",
-      description: "Please starting coding",
-      tag: "Coding",
-      date: "2026-08-23T15:43:10.465Z",
-      __v: 0,
-    },
-  ];
+  const host = "http://localhost:5000";
+  const notesInitial = []
   const [notes, setNotes] = useState(notesInitial);
 
-  // Add a Note
-  const addNote = (title, description, tag) => {
+  // Get all Notes
+  const getNotes = async () => {
     // TODO API Call
+    const response = await fetch(
+      `${host}/api/notes/fetchallnotes`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNmE4NDg3NDBhYzFiNjM1ZWYxOTBmMjA3In0sImlhdCI6MTc4NzA3MDI3Mn0.pyizXjbd-gROLq30jkUFISDOu4MHC_-VcRim6lNtg78",
+        },
+      },
+    );
+    const json = await response.json();
+    console.log(json);
+    setNotes(json);
+  };
+
+  // Add a Note
+  const addNote = async (title, description, tag) => {
+    // TODO API Call
+    const response = await fetch(
+      `${host}/api/notes/addnote`,
+      {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNmE4NDg3NDBhYzFiNjM1ZWYxOTBmMjA3In0sImlhdCI6MTc4NzA3MDI3Mn0.pyizXjbd-gROLq30jkUFISDOu4MHC_-VcRim6lNtg78",
+        },
+        body: JSON.stringify(title, description, tag),
+      },
+    );
+
     const note = {
       _id: "6a8b14dba00debec09e5f2bb8",
       user: "6a848740ac1b635ef190f207",
@@ -103,13 +63,36 @@ const NoteState = (props) => {
   };
 
   // Edit a Note
-  const editNote = (id, title, description, tag) => {
-    
+  const editNote = async (id, title, description, tag) => {
+    // API Call
+    const response = await fetch(
+      `${host}/api/notes/updatenote/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNmE4NDg3NDBhYzFiNjM1ZWYxOTBmMjA3In0sImlhdCI6MTc4NzA3MDI3Mn0.pyizXjbd-gROLq30jkUFISDOu4MHC_-VcRim6lNtg78",
+        },
+        body: JSON.stringify(title, description, tag),
+      },
+    );
+    const json = response.json();
+
+    // Logic to edit client
+    for (let index = 0; index < notes.length; index++) {
+      const element = notes[index];
+      if (element._id === id) {
+        element.title = title;
+        element.description = description;
+        element.tag = tag;
+      }
+    }
   };
 
   return (
     <noteContext.Provider
-      value={{ notes, setNotes, addNote, deleteNote, editNote }}
+      value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes }}
     >
       {props.children}
     </noteContext.Provider>
