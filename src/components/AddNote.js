@@ -5,60 +5,70 @@ const AddNote = () => {
   const context = useContext(noteContext);
   const { addNote } = context;
 
-  const [note, setNote] = useState({title: "", description: "", tag: "default"})
-  
+  const [note, setNote] = useState({
+    title: "",
+    description: "",
+    tag: "default",
+  });
+
   const handleClick = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     addNote(note.title, note.description, note.tag);
-  }
-  
+  };
+
   const onChange = (e) => {
-    setNote({...note, [e.target.name]: e.target.value})
-  }
+    setNote({ ...note, [e.target.name]: e.target.value });
+  };
   return (
-    <div>
-      <h1>Add a notes</h1>
-      <form className="my-3">
-        <div className="mb-3">
-          <label htmlFor="title" className="form-label">
-            Title
-          </label>
+    <section className="composer-panel">
+      <div className="section-kicker">Quick capture</div>
+      <h2>What&apos;s on your mind?</h2>
+      <p className="muted-copy">
+        Turn a thought into something you can return to.
+      </p>
+      <form className="note-form">
+        <div className="field-group">
+          <label htmlFor="title">Title</label>
           <input
             type="text"
-            className="form-control"
             id="title"
             name="title"
-            aria-describedby="emailHelp"
+            placeholder="Give your note a name"
             onChange={onChange}
+            required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
-          <input
-            type="text"
-            className="form-control"
+        <div className="field-group">
+          <label htmlFor="description">Description</label>
+          <textarea
             id="description"
             name="description"
+            placeholder="Write the details here..."
             onChange={onChange}
+            required
           />
         </div>
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
-          </label>
+        <div className="form-row">
+          <div className="field-group">
+            <label htmlFor="tag">Tag</label>
+            <input
+              type="text"
+              id="tag"
+              name="tag"
+              placeholder="e.g. planning"
+              onChange={onChange}
+            />
+          </div>
+          <button
+            type="submit"
+            className="primary-button"
+            onClick={handleClick}
+          >
+            <span>+</span> Add note
+          </button>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleClick}>
-          Add Note
-        </button>
       </form>
-    </div>
+    </section>
   );
 };
 

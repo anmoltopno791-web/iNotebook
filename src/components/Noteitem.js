@@ -4,24 +4,45 @@ import noteContext from "../context/notes/noteContext";
 const NoteItem = (props) => {
   const context = useContext(noteContext);
   const { deleteNote } = context;
-  const { note } = props;
+  const { note, updateNote } = props;
   return (
-    <div className="col-md-3">
-      <div className="card my-3">
-        <div className="card-body">
-          <h5 className="card-title">{note.title}</h5>
-          <p className="card-text">{note.description}</p>
-          <i
-            className="fa-solid fa-trash mx- 2"
-            style={{ cursor: "pointer" }} onClick={() => {deleteNote(note._id)}}
-          ></i>
-          <i
-            className="fa-solid fa-pen-to-square mx-2"
-            style={{ cursor: "pointer" }}
-          ></i>
+    <article className="note-card">
+      <div className="note-card-top">
+        <span className="note-tag">{note.tag || "General"}</span>
+        <span className="note-dot" aria-hidden="true"></span>
+      </div>
+      <h3>{note.title}</h3>
+      <p>{note.description}</p>
+      <div className="note-card-footer">
+        <span className="note-date">
+          {note.date
+            ? new Date(note.date).toLocaleDateString(undefined, {
+                month: "short",
+                day: "numeric",
+              })
+            : "New note"}
+        </span>
+        <div className="note-actions">
+          <button
+            type="button"
+            className="icon-button danger"
+            aria-label={`Delete ${note.title}`}
+            onClick={() => deleteNote(note._id)}
+          >
+            Delete
+          </button>
+          <button
+            type="button"
+            className="icon-button"
+            aria-label={`Edit ${note.title}`}
+            title={`Edit ${note.title}`}
+            onClick={() => updateNote(note)}
+          >
+            Edit
+          </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

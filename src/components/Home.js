@@ -1,11 +1,7 @@
 import Notes from "./Notes";
 
 const Home = () => {
-  return (
-    <div>
-      <Notes/>
-    </div>
-  );
+  return <Notes />;
 };
 
 export default Home;
