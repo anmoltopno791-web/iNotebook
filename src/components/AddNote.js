@@ -8,12 +8,13 @@ const AddNote = () => {
   const [note, setNote] = useState({
     title: "",
     description: "",
-    tag: "default",
+    tag: "",
   });
 
   const handleClick = (e) => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
+    setNote({ title: "", description: "", tag: "" });
   };
 
   const onChange = (e) => {
@@ -34,6 +35,7 @@ const AddNote = () => {
             id="title"
             name="title"
             placeholder="Give your note a name"
+            value={note.title}
             onChange={onChange}
             required
           />
@@ -44,6 +46,7 @@ const AddNote = () => {
             id="description"
             name="description"
             placeholder="Write the details here..."
+            value={note.description}
             onChange={onChange}
             required
           />
@@ -56,10 +59,12 @@ const AddNote = () => {
               id="tag"
               name="tag"
               placeholder="e.g. planning"
+              value={note.tag}
               onChange={onChange}
             />
           </div>
           <button
+            disabled={note.title.length < 5 || note.description.length < 5}
             type="submit"
             className="primary-button"
             onClick={handleClick}
