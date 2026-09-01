@@ -33,7 +33,7 @@ body {
   margin: auto;
   display: flex;
   align-items: center;
-  gap: 46px;
+  gap: 20px;
 }
 .brand {
   display: flex;

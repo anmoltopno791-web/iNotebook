@@ -25,6 +25,8 @@ const Navbar = () => {
           <span className="avatar">A</span>
           <span className="profile-name">Anmol</span>
         </div>
+        <Link class="btn btn-danger" to="/login" role="button">Login</Link>
+        <Link class="btn btn-primary" to="/signup" role="button">Sign up</Link>
       </div>
     </nav>
   );
