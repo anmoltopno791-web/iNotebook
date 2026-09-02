@@ -17,6 +17,53 @@ body {
   background: var(--paper);
   color: var(--ink);
 }
+.app-alert {
+  position: fixed;
+  z-index: 10;
+  top: 92px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 280px;
+  max-width: min(420px, calc(100vw - 40px));
+  padding: 15px 16px 15px 18px;
+  border-left: 4px solid var(--accent);
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: 0 14px 32px rgba(32, 32, 29, 0.16);
+  animation: alert-in 0.25s ease-out;
+  font-size: 13px;
+}
+.app-alert--success {
+  border-left-color: #4f7d55;
+}
+.app-alert--error {
+  border-left-color: #b74735;
+}
+.app-alert button {
+  border: 0;
+  margin-left: auto;
+  padding: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+.app-alert button:hover {
+  color: var(--ink);
+}
+@keyframes alert-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .app-shell {
   max-width: 1180px;
   margin: 0 auto;

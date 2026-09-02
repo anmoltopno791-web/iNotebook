@@ -1,8 +1,9 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ profileName }) => {
   const location = useLocation();
+  const displayName = profileName || "Guest";
   return (
     <nav className="topbar">
       <div className="topbar-inner">
@@ -21,12 +22,19 @@ const Navbar = () => {
             About
           </Link>
         </div>
-        <div className="profile-chip" aria-label="Current workspace member">
-          <span className="avatar">A</span>
-          <span className="profile-name">Anmol</span>
+        <div
+          className="profile-chip"
+          aria-label={`Current workspace member: ${displayName}`}
+        >
+          <span className="avatar">{displayName.charAt(0).toUpperCase()}</span>
+          <span className="profile-name">{displayName}</span>
         </div>
-        <Link class="btn btn-danger" to="/login" role="button">Login</Link>
-        <Link class="btn btn-primary" to="/signup" role="button">Sign up</Link>
+        <Link class="btn btn-danger" to="/login" role="button">
+          Login
+        </Link>
+        <Link class="btn btn-primary" to="/signup" role="button">
+          Sign up
+        </Link>
       </div>
     </nav>
   );

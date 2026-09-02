@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const Signup = (props) => {
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -14,30 +14,39 @@ const Signup = () => {
     e.preventDefault();
     const { name, email, password, date } = credentials;
 
-    const response = await fetch("http://localhost:5000/api/auth/createuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-        date,
-      }),
-    });
+    let response;
+    try {
+      response = await fetch("http://localhost:5000/api/auth/createuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          date,
+        }),
+      });
+    } catch (error) {
+      props.showAlert("Unable to connect. Please try again.", "error");
+      return;
+    }
 
     const json = await response.json();
-    console.log(json);
 
     if (!response.ok) {
       const errorMessage =
-        json?.errors?.[0]?.msg || json?.error || "Signup failed";
-      alert(errorMessage);
+        json?.errors?.[0]?.msg ||
+        (typeof json?.error === "string" ? json.error : json?.error?.message) ||
+        "Signup failed";
+      props.showAlert(errorMessage, "error");
       return;
     }
 
     localStorage.setItem("token", json.authtoken);
+    props.onAuthSuccess(json.name || name);
+    props.showAlert("Your account is ready. Welcome to iNotebook.", "success");
     navigate("/");
   };
 

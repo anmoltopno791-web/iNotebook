@@ -8,33 +8,44 @@ const Login = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: credentials.email,
-        password: credentials.password,
-      }),
-    });
+    let response;
+    try {
+      response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: credentials.email,
+          password: credentials.password,
+        }),
+      });
+    } catch (error) {
+      props.showAlert("Unable to connect. Please try again.", "error");
+      return;
+    }
 
     const json = await response.json();
-    console.log(json);
 
     if (!response.ok) {
-      console.error(json.error || "Login failed");
+      props.showAlert(
+        json?.errors?.[0]?.msg ||
+          (typeof json?.error === "string"
+            ? json.error
+            : json?.error?.message) ||
+          "Login failed",
+        "error",
+      );
       return;
     }
 
     localStorage.setItem("token", json.authtoken);
-    console.log("Login successful");
     if (json.success) {
-      // Save the auth token and redirect
-      localStorage.setItem("token", json.authtoken);
+      props.onAuthSuccess(json.name);
+      props.showAlert("Welcome back. Login successful.", "success");
       navigate("/");
     } else {
-      alert("Invalid credentials");
+      props.showAlert("Invalid credentials", "error");
     }
   };
 
