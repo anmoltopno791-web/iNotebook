@@ -14,6 +14,9 @@ function App() {
   const [profileName, setProfileName] = useState(
     () => localStorage.getItem("profileName") || "",
   );
+  const [isAuthenticated, setIsAuthenticated] = useState(() =>
+    Boolean(localStorage.getItem("token")),
+  );
 
   const showAlert = (message, type = "info") => {
     setAlert({ message, type });
@@ -21,13 +24,26 @@ function App() {
 
   const handleAuthSuccess = (name) => {
     setProfileName(name);
+    setIsAuthenticated(true);
     localStorage.setItem("profileName", name);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("profileName");
+    setProfileName("");
+    setIsAuthenticated(false);
+    setAlert({ message: "You have been logged out.", type: "success" });
   };
 
   return (
     <NoteState>
       <Router>
-        <Navbar profileName={profileName} />
+        <Navbar
+          profileName={profileName}
+          isAuthenticated={isAuthenticated}
+          onLogout={handleLogout}
+        />
         <Alert
           message={alert.message}
           type={alert.type}

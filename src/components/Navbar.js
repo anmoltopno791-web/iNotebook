@@ -1,9 +1,16 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const Navbar = ({ profileName }) => {
+const Navbar = ({ profileName, isAuthenticated, onLogout }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const displayName = profileName || "Guest";
+
+  const handleLogout = () => {
+    onLogout();
+    navigate("/login");
+  };
+
   return (
     <nav className="topbar">
       <div className="topbar-inner">
@@ -29,12 +36,24 @@ const Navbar = ({ profileName }) => {
           <span className="avatar">{displayName.charAt(0).toUpperCase()}</span>
           <span className="profile-name">{displayName}</span>
         </div>
-        <Link class="btn btn-danger" to="/login" role="button">
-          Login
-        </Link>
-        <Link class="btn btn-primary" to="/signup" role="button">
-          Sign up
-        </Link>
+        {isAuthenticated ? (
+          <button
+            className="btn btn-danger"
+            type="button"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        ) : (
+          <>
+            <Link className="btn btn-danger" to="/login" role="button">
+              Login
+            </Link>
+            <Link className="btn btn-primary" to="/signup" role="button">
+              Sign up
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );

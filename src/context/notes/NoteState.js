@@ -5,17 +5,17 @@ const NoteState = (props) => {
   const host = "http://localhost:5000";
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
+  const getAuthHeaders = () => ({
+    "Content-Type": "application/json",
+    "auth-token": localStorage.getItem("token"),
+  });
 
   // Get all Notes
   const getNotes = async () => {
     // TODO API Call
     const response = await fetch(`${host}/api/notes/fetchallnotes`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNmE4NDg3NDBhYzFiNjM1ZWYxOTBmMjA3In0sImlhdCI6MTc4NzA3MDI3Mn0.pyizXjbd-gROLq30jkUFISDOu4MHC_-VcRim6lNtg78",
-      },
+      headers: getAuthHeaders(),
     });
     const json = await response.json();
     setNotes(json);
@@ -26,11 +26,7 @@ const NoteState = (props) => {
     // TODO API Call
     const response = await fetch(`${host}/api/notes/addnote`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNmE4NDg3NDBhYzFiNjM1ZWYxOTBmMjA3In0sImlhdCI6MTc4NzA3MDI3Mn0.pyizXjbd-gROLq30jkUFISDOu4MHC_-VcRim6lNtg78",
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify({ title, description, tag }),
     });
     const note = await response.json();
@@ -40,11 +36,7 @@ const NoteState = (props) => {
   const deleteNote = async (id) => {
     const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNmE4NDg3NDBhYzFiNjM1ZWYxOTBmMjA3In0sImlhdCI6MTc4NzA3MDI3Mn0.pyizXjbd-gROLq30jkUFISDOu4MHC_-VcRim6lNtg78",
-      },
+      headers: getAuthHeaders(),
     });
     if (!response.ok) {
       const message = await response.text();
@@ -58,11 +50,7 @@ const NoteState = (props) => {
   const editNote = async (id, title, description, tag) => {
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNmE4NDg3NDBhYzFiNjM1ZWYxOTBmMjA3In0sImlhdCI6MTc4NzA3MDI3Mn0.pyizXjbd-gROLq30jkUFISDOu4MHC_-VcRim6lNtg78",
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify({ title, description, tag }),
     });
     if (!response.ok) {
