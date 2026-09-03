@@ -1,0 +1,26 @@
+<svg width="640" height="220" viewBox="0 0 640 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="40" y1="30" x2="560" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="80" y1="40" x2="240" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#E2E8F0"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="18" y="18" width="604" height="184" rx="28" fill="url(#bg)"/>
+
+  <rect x="52" y="52" width="170" height="116" rx="18" fill="url(#panel)"/>
+  <rect x="74" y="76" width="126" height="14" rx="7" fill="#8B5CF6" opacity="0.8"/>
+  <rect x="74" y="104" width="96" height="12" rx="6" fill="#94A3B8"/>
+  <rect x="74" y="126" width="112" height="12" rx="6" fill="#94A3B8"/>
+  <rect x="74" y="148" width="78" height="12" rx="6" fill="#94A3B8"/>
+
+  <path d="M242 70H450C468.091 70 484 85.9086 484 104V116C484 134.091 468.091 150 450 150H242V70Z" fill="#F8FAFC" opacity="0.18"/>
+  <path d="M242 74H462C477.464 74 490 86.536 490 102V112C490 127.464 477.464 140 462 140H242V74Z" fill="#F8FAFC" opacity="0.12"/>
+
+  <text x="246" y="122" font-family="Segoe UI, Arial, sans-serif" font-size="62" font-weight="700" fill="#F8FAFC">iNotebook</text>
+  <text x="249" y="156" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="500" fill="#E2E8F0" opacity="0.9">Your personal digital notebook</text>
+</svg>
