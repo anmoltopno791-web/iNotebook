@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NoteState from "./context/notes/NoteState";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -17,6 +17,14 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() =>
     Boolean(localStorage.getItem("token")),
   );
+  const [isDarkMode, setIsDarkMode] = useState(
+    () => localStorage.getItem("theme") === "dark",
+  );
+
+  useEffect(() => {
+    document.body.classList.toggle("dark-mode", isDarkMode);
+    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+  }, [isDarkMode]);
 
   const showAlert = (message, type = "info") => {
     setAlert({ message, type });
@@ -43,6 +51,8 @@ function App() {
           profileName={profileName}
           isAuthenticated={isAuthenticated}
           onLogout={handleLogout}
+          isDarkMode={isDarkMode}
+          onToggleTheme={() => setIsDarkMode((current) => !current)}
         />
         <Alert
           message={alert.message}

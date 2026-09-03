@@ -1,7 +1,13 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const Navbar = ({ profileName, isAuthenticated, onLogout }) => {
+const Navbar = ({
+  profileName,
+  isAuthenticated,
+  onLogout,
+  isDarkMode,
+  onToggleTheme,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const displayName = profileName || "Guest";
@@ -36,6 +42,17 @@ const Navbar = ({ profileName, isAuthenticated, onLogout }) => {
           <span className="avatar">{displayName.charAt(0).toUpperCase()}</span>
           <span className="profile-name">{displayName}</span>
         </div>
+        <button
+          className="theme-toggle"
+          type="button"
+          onClick={onToggleTheme}
+          aria-label={
+            isDarkMode ? "Switch to light mode" : "Switch to dark mode"
+          }
+          title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          <span aria-hidden="true">{isDarkMode ? "☼" : "☾"}</span>
+        </button>
         {isAuthenticated ? (
           <button
             className="btn btn-danger"

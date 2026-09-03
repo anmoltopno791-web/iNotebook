@@ -5,6 +5,36 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(135deg, #f5f7ff 0%, #eef4ff 35%, #f8f5ff 100%);
   color: #1f2937;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+body.dark-mode {
+  background: linear-gradient(135deg, #171815 0%, #20211d 55%, #151613 100%);
+  color: #f1f0e9;
+}
+
+body.dark-mode .auth-card {
+  background: rgba(36, 37, 32, 0.82);
+  border-color: rgba(170, 169, 159, 0.2);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .auth-header h1,
+body.dark-mode .form-group label {
+  color: #f1f0e9;
+}
+
+body.dark-mode .auth-header p,
+body.dark-mode .form-group small {
+  color: #aaa99f;
+}
+
+body.dark-mode .form-group input {
+  border-color: #4b4c45;
+  background: #2b2c27;
+  color: #f1f0e9;
 }
 
 code {

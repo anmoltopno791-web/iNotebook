@@ -7,6 +7,36 @@
   --accent: #d8653f;
   --accent-dark: #a7462e;
   --sage: #d9e0d0;
+  --surface: #fffefa;
+  --surface-muted: #eeeee7;
+}
+
+body.dark-mode {
+  --ink: #f1f0e9;
+  --muted: #aaa99f;
+  --line: #41413b;
+  --paper: #171815;
+  --white: #242520;
+  --sage: #3d493b;
+  --surface: #242520;
+  --surface-muted: #30312b;
+}
+
+body.dark-mode .topbar {
+  background: rgba(23, 24, 21, 0.9);
+}
+
+body.dark-mode .composer-panel {
+  background: #10110f;
+  color: #f1f0e9;
+}
+
+body.dark-mode .note-card-footer {
+  border-top-color: #41413b;
+}
+
+body.dark-mode .search-box input {
+  color: #f1f0e9;
 }
 
 * {
@@ -16,6 +46,9 @@
 body {
   background: var(--paper);
   color: var(--ink);
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
 }
 .app-alert {
   position: fixed;
@@ -125,6 +158,30 @@ body {
   align-items: center;
   gap: 9px;
   font-size: 13px;
+}
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+.theme-toggle:hover {
+  background: var(--surface-muted);
+  transform: rotate(12deg);
+}
+.theme-toggle:focus-visible {
+  outline: 3px solid rgba(216, 101, 63, 0.3);
+  outline-offset: 3px;
 }
 .btn {
   display: inline-flex;
